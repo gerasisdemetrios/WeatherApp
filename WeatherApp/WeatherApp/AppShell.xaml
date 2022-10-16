@@ -3,6 +3,7 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:WeatherApp.Views"
        Title="WeatherApp"
+       BackgroundColor="{StaticResource DarkMode}"
        x:Class="WeatherApp.AppShell">
 
     <!--
@@ -12,7 +13,7 @@
     -->
 
     <Shell.Resources>
-        <ResourceDictionary>
+        <!--<ResourceDictionary>
             <Style x:Key="BaseStyle" TargetType="Element">
                 <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
                 <Setter Property="Shell.ForegroundColor" Value="White" />
@@ -26,21 +27,12 @@
             </Style>
             <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
             <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
-        </ResourceDictionary>
+        </ResourceDictionary>-->
     </Shell.Resources>
 
-    <TabBar>
-        <ShellContent Title="About" Icon="icon_about.png" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
-        <ShellContent Title="Browse" Icon="icon_feed.png" ContentTemplate="{DataTemplate local:ItemsPage}" />
-    </TabBar>
+    <local:WeatherPage/>
 
-    <!--
-        If you would like to navigate to this content you can do so by calling
-        await Shell.Current.GoToAsync("//LoginPage");
-    -->
-    <TabBar>
-        <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
-    </TabBar>
+    <!--<ShellContent Title="Weather" Icon="icon_about.png" Route="AboutPage" ContentTemplate="{DataTemplate local:WeatherPage}" />-->
 
 
 </Shell>

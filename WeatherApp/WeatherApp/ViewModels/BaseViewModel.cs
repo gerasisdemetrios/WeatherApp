@@ -10,7 +10,7 @@ namespace WeatherApp.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        public IWeatherService WeatherService => DependencyService.Get<IWeatherService>();
 
         bool isBusy = false;
         public bool IsBusy

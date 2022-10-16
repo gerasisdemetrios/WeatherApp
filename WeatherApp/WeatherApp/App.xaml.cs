@@ -13,7 +13,8 @@ namespace WeatherApp
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
+            DependencyService.Register<WeatherService>();
+
             MainPage = new AppShell();
         }
 

@@ -5,9 +5,9 @@ using Xamarin.Forms.Xaml;
 
 namespace WeatherApp.Views
 {
-    public partial class AboutPage : ContentPage
+    public partial class WeatherPage : ContentPage
     {
-        public AboutPage()
+        public WeatherPage()
         {
             InitializeComponent();
         }
