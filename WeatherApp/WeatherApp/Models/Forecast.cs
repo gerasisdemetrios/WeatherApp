@@ -9,7 +9,9 @@ namespace WeatherApp.Models
     {
         [JsonProperty("weather")]
         public List<Weather> Weather { get; set; }
-
+        
+        [JsonProperty("name")]
+        public string Location { get; set; }
         public Main Main { get; set; }
     }
 }

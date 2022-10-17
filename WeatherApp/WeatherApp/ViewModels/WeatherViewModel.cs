@@ -29,17 +29,20 @@ namespace WeatherApp.ViewModels
                 Pressure = string.Empty;
                 Humidity = string.Empty;
 
-
+                IsBusy = true;
                 var location = await Geolocation.GetLastKnownLocationAsync();
 
-                if (location != null)
+                if (location == null)
                 {
-                    Console.WriteLine($"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
+                    IsBusy = false;
+                    DependencyService.Get<IPlaySoundService>().PlayErrorSound();
+                    return;
                 }
 
-                await GetWeatherAsync(location.Latitude, location.Altitude.Value);
+                
+                await GetWeatherAsync(location.Latitude, location.Longitude);
 
-                DependencyService.Get<IPlaySoundService>().PlaySucessSound();
+                DependencyService.Get<IPlaySoundService>().PlaySucessSound();                
             }
             catch (FeatureNotSupportedException)
             {
@@ -57,6 +60,8 @@ namespace WeatherApp.ViewModels
             {
                 DependencyService.Get<IPlaySoundService>().PlayErrorSound();
             }
+
+            IsBusy = false;
         }
 
         string region = string.Empty;
@@ -136,6 +141,11 @@ namespace WeatherApp.ViewModels
             Temperature = string.Format("{0} °C", forecast.Main.Temperature.ToString());
             Pressure = string.Format("{0} hPa", forecast.Main.Pressure.ToString());
             Humidity = string.Format("{0} %", forecast.Main.Humidity.ToString());
+
+            if (string.IsNullOrWhiteSpace(Region))
+            {
+                Region = forecast.Location;
+            }
         }
 
         public ICommand SearchCommand { get; }

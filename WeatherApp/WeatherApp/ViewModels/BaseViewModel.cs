@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using WeatherApp.Models;
 using WeatherApp.Services;
 using Xamarin.Forms;
 
