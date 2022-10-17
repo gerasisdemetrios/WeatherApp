@@ -19,51 +19,6 @@ namespace WeatherApp.ViewModels
             CurrentLocationCommand = new Command(async () => await GetCurrentLocationAsync());
         }
 
-        private async Task GetCurrentLocationAsync()
-        {
-            try
-            {
-                Region = string.Empty;
-                Description = string.Empty;
-                Temperature = string.Empty;
-                Pressure = string.Empty;
-                Humidity = string.Empty;
-
-                IsBusy = true;
-                var location = await Geolocation.GetLastKnownLocationAsync();
-
-                if (location == null)
-                {
-                    IsBusy = false;
-                    DependencyService.Get<IPlaySoundService>().PlayErrorSound();
-                    return;
-                }
-
-                
-                await GetWeatherAsync(location.Latitude, location.Longitude);
-
-                DependencyService.Get<IPlaySoundService>().PlaySucessSound();                
-            }
-            catch (FeatureNotSupportedException)
-            {
-                DependencyService.Get<IPlaySoundService>().PlayErrorSound();
-            }
-            catch (FeatureNotEnabledException)
-            {
-                DependencyService.Get<IPlaySoundService>().PlayErrorSound();
-            }
-            catch (PermissionException)
-            {
-                DependencyService.Get<IPlaySoundService>().PlayErrorSound();
-            }
-            catch (Exception)
-            {
-                DependencyService.Get<IPlaySoundService>().PlayErrorSound();
-            }
-
-            IsBusy = false;
-        }
-
         string region = string.Empty;
         public string Region
         {
@@ -146,6 +101,50 @@ namespace WeatherApp.ViewModels
             {
                 Region = forecast.Location;
             }
+        }
+
+        private async Task GetCurrentLocationAsync()
+        {
+            try
+            {
+                Region = string.Empty;
+                Description = string.Empty;
+                Temperature = string.Empty;
+                Pressure = string.Empty;
+                Humidity = string.Empty;
+
+                IsBusy = true;
+                var location = await Geolocation.GetLastKnownLocationAsync();
+
+                if (location == null)
+                {
+                    IsBusy = false;
+                    DependencyService.Get<IPlaySoundService>().PlayErrorSound();
+                    return;
+                }
+
+                await GetWeatherAsync(location.Latitude, location.Longitude);
+
+                DependencyService.Get<IPlaySoundService>().PlaySucessSound();
+            }
+            catch (FeatureNotSupportedException)
+            {
+                DependencyService.Get<IPlaySoundService>().PlayErrorSound();
+            }
+            catch (FeatureNotEnabledException)
+            {
+                DependencyService.Get<IPlaySoundService>().PlayErrorSound();
+            }
+            catch (PermissionException)
+            {
+                DependencyService.Get<IPlaySoundService>().PlayErrorSound();
+            }
+            catch (Exception)
+            {
+                DependencyService.Get<IPlaySoundService>().PlayErrorSound();
+            }
+
+            IsBusy = false;
         }
 
         public ICommand SearchCommand { get; }
